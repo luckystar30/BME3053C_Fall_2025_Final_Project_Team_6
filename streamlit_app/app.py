@@ -1,12 +1,9 @@
 """
 NeuroState — EEG Alpha/Theta Mental State Classifier
-Run with:
-    streamlit run app.py
-""""""
-This app was developed using GitHub Copilot in ‘Agent’ mode (GPT-5.1-Codex preview)
-for rapid prototyping of signal processing functions, plotting, and Streamlit UI.
 
-The author reviewed, tested, and documented all code manually.
+This app was developed using GitHub Copilot in ‘Agent’ mode (GPT-5.1-Codex preview)
+to speed up development of the Streamlit UI, plotting code, and data handling.
+All code has been reviewed, tested, and documented manually.
 """
 
 import streamlit as st
@@ -33,17 +30,20 @@ This mini-BCI demo:
 # ----------------------------------------------------------
 # Sidebar Inputs
 # ----------------------------------------------------------
+# Generated with Copilot prompt: "Create Streamlit sidebar for EEG file upload and parameters"
 st.sidebar.header("Data Input")
 uploaded_file = st.sidebar.file_uploader("Upload EEG CSV (single column of samples)", type=["csv"])
 fs = st.sidebar.number_input("Sampling rate (Hz)", value=256.0, step=1.0)
 
 window_sec = st.sidebar.slider("Welch window length (seconds)", 0.5, 5.0, 2.0)
 
+# Generated with Copilot prompt: "Add sliders for synthetic EEG alpha/theta amplitudes"
 st.sidebar.header("Synthetic Signal Settings")
 duration = st.sidebar.number_input("Synthetic duration (s)", value=10)
 mix_alpha = st.sidebar.slider("Alpha amplitude", 0.5, 2.0, 1.0)
 mix_theta = st.sidebar.slider("Theta amplitude", 0.0, 2.0, 0.6)
 
+# Generated with Copilot prompt: "Add numeric inputs for mental state classification thresholds"
 st.sidebar.header("Classification Thresholds")
 thresh_focused = st.sidebar.number_input("Focused if ratio <", value=0.5)
 thresh_relaxed = st.sidebar.number_input("Relaxed if ratio <", value=1.5)
@@ -51,6 +51,7 @@ thresh_relaxed = st.sidebar.number_input("Relaxed if ratio <", value=1.5)
 # ----------------------------------------------------------
 # Load or Generate Data
 # ----------------------------------------------------------
+# Generated with Copilot prompt: "Load uploaded CSV if available; otherwise generate synthetic EEG"
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     if df.shape[1] == 1:
@@ -64,6 +65,7 @@ else:
     st.info("No file uploaded — generating synthetic EEG.")
     t = np.arange(0, duration, 1 / fs)
     rng = np.random.default_rng(seed=42)
+    # Generated with Copilot prompt: "Generate synthetic EEG as alpha + theta sine waves with noise"
     sig = (
         mix_alpha * np.sin(2 * np.pi * 10 * t) +
         mix_theta * np.sin(2 * np.pi * 6 * t) +
@@ -76,6 +78,7 @@ time_axis = np.arange(len(sig)) / fs
 # ----------------------------------------------------------
 # Raw Signal Display
 # ----------------------------------------------------------
+# Generated with Copilot prompt: "Plot raw EEG signal in Streamlit"
 st.subheader("Raw EEG Signal")
 fig1, ax1 = plt.subplots(figsize=(10, 3))
 ax1.plot(time_axis, sig)
@@ -86,6 +89,7 @@ st.pyplot(fig1)
 # ----------------------------------------------------------
 # Filtered Bands
 # ----------------------------------------------------------
+# Generated with Copilot prompt: "Plot alpha and theta filtered signals side by side in Streamlit"
 st.subheader("Bandpass-Filtered Signals")
 col1, col2 = st.columns(2)
 
@@ -106,6 +110,7 @@ with col2:
 # ----------------------------------------------------------
 # Bandpower Computation
 # ----------------------------------------------------------
+# Generated with Copilot prompt: "Compute delta, theta, alpha bandpower using bandpower function"
 delta_bp = bandpower(sig, fs, (1, 4), window_sec=window_sec)
 theta_bp = bandpower(sig, fs, (4, 7), window_sec=window_sec)
 alpha_bp = bandpower(sig, fs, (8, 12), window_sec=window_sec)
@@ -119,6 +124,7 @@ st.pyplot(fig2)
 # ----------------------------------------------------------
 # Classification
 # ----------------------------------------------------------
+# Generated with Copilot prompt: "Classify mental state using theta/alpha ratio"
 ratio = theta_bp / alpha_bp if alpha_bp > 0 else np.inf
 
 if ratio < thresh_focused:
@@ -135,6 +141,7 @@ st.markdown(f"### **State: {state}**")
 # ----------------------------------------------------------
 # Spectrogram
 # ----------------------------------------------------------
+# Generated with Copilot prompt: "Compute and display spectrogram in Streamlit"
 st.subheader("Spectrogram")
 f, t_spec, Sxx = compute_spectrogram(sig, fs, nperseg=int(window_sec * fs))
 fig3, ax3 = plt.subplots(figsize=(10, 3))
