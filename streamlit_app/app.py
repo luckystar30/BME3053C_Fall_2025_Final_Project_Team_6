@@ -2,6 +2,11 @@
 NeuroState — EEG Alpha/Theta Mental State Classifier
 Run with:
     streamlit run app.py
+""""""
+This app was developed using GitHub Copilot in ‘Agent’ mode (GPT-5.1-Codex preview)
+for rapid prototyping of signal processing functions, plotting, and Streamlit UI.
+
+The author reviewed, tested, and documented all code manually.
 """
 
 import streamlit as st
