@@ -18,9 +18,9 @@ This app is designed for neuroscience students, BCI enthusiasts, and educators t
 
 1. Ensure Python dependencies are installed:
 
-a. pip install streamlit numpy scipy pandas matplotlib
-b. cd streamlit_app
-c. streamlit run app.py
+1.1. pip install streamlit numpy scipy pandas matplotlib
+1.2. cd streamlit_app
+1.3. streamlit run app.py
 
 ## Usage Guide
 
@@ -44,10 +44,10 @@ Synthetic signals combine alpha (10 Hz) and theta (6 Hz) sine waves with Gaussia
 ## Project Structure
 
 streamlit_app/
-├── app.py                    # Main Streamlit application
-├── utils/                    # Signal processing functions
-│   ├── __init__.py
-│   └── signal_processing.py  # Functions for bandpower, filtering, spectrogram
+- ├── app.py                    # Main Streamlit application
+- ├── utils/                    # Signal processing functions
+- │   ├── __init__.py
+- │   └── signal_processing.py  # Functions for bandpower, filtering, spectrogram
 
 app.py: Handles the UI, data loading, plotting, and mental state classification.
 utils/signal_processing.py: Contains core DSP functions (bandpower, butter_bandpass_filter, compute_spectrogram).
