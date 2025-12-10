@@ -18,9 +18,9 @@ This app is designed for neuroscience students, BCI enthusiasts, and educators t
 
 1. Ensure Python dependencies are installed:
 
-1. pip install streamlit numpy scipy pandas matplotlib
-2. cd streamlit_app
-3. streamlit run app.py
+a. pip install streamlit numpy scipy pandas matplotlib
+b. cd streamlit_app
+c. streamlit run app.py
 
 ## Usage Guide
 
